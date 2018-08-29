@@ -1,11 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 struct node {
     struct node* left; //f0;
     struct node* right; //f4;
     unsigned char val; //f8;
 };
+
 
 unsigned int check_node(struct node* tree, char* path, char passwd_char);
 
@@ -38,12 +40,14 @@ unsigned int check_node(struct node* tree, char* path, char passwd_char) {
         if (tree->val != passwd_char) {
             if (tree->val <= passwd_char) {
                 if (*path != 'R') {
+		    printf("%c != 'R'\n", *path);
                     res = 0;
                 } else {
                     res = check_node(tree->right, path + 1, passwd_char);
                 }
             } else {
                 if (*path != 'L') {
+		    printf("%c != 'L'\n", *path);
                     res = 0;
                 } else {
                     res = check_node(tree->left, path + 1, passwd_char);
@@ -51,11 +55,14 @@ unsigned int check_node(struct node* tree, char* path, char passwd_char) {
             }
         } else {
             if (*path != 'D') {
+	        printf("%c != 'D'\n", *path);
                 res = 0;
             } else {
                 if (tree->val != passwd_char) {
+	            printf("%c != %c\n", passwd_char, tree->val);
                     res = 0;
                 } else {
+		    printf("%c is good.\n", passwd_char);
                     res = 1;
                 }
             }
@@ -124,6 +131,23 @@ void dump_dot(char *s, struct node *tree){
     printf("}\n");
 }
 
+
+void find_passwd(struct node *tree, char *path){
+    char *str = path;
+    const char s[2] = "D";
+    char *token;
+
+    /* get the first token */
+    token = strtok(str, s);
+
+    /* walk through other tokens */
+    while( token != NULL ) {
+       printf(" %s\n", token );
+
+       token = strtok(NULL, s);
+    }
+}
+
 int main(int argc, char** argv) {
     char* key;
     struct node* root;
@@ -135,14 +159,19 @@ int main(int argc, char** argv) {
     key = "yuoteavpxqgrlsdhwfjkzi_cmbn";
     root = build_tree(key);
     if (argc != 3) {
-        dump_dot(key, root);
-        // printf("You have the wrong number of arguments for this forest.\n");
-        // v7 = argv[0];
-        // printf("%s [password] [string]\n", v7);
+	if(argc < 2){
+            printf("You have the wrong number of arguments for this forest.\n");
+            v7 = argv[0];
+            printf("%s [password] [string]\n", v7);
+	} else if (strcmp(argv[1], "dot") == 0) {
+            dump_dot(key, root);
+	}
         exit(1);
     }
     arg2 = argv[2];
     arg1 = argv[1];
+    find_passwd(root, arg2);
+    return 0;
     valid = check_tree(root, arg2, arg1);
     if (!valid) {
         printf("Nope.\n");
