@@ -133,19 +133,25 @@ void dump_dot(char *s, struct node *tree){
 
 
 void find_passwd(struct node *tree, char *path){
-    char *str = path;
-    const char s[2] = "D";
-    char *token;
-
-    /* get the first token */
-    token = strtok(str, s);
-
-    /* walk through other tokens */
-    while( token != NULL ) {
-       printf(" %s\n", token );
-
-       token = strtok(NULL, s);
+    struct node *cursor = tree;
+    while(*path){
+        switch(*path){
+            case 'L':
+                cursor = cursor->left;
+                break;
+            case 'R':
+                cursor = cursor->right;
+                break;
+            case 'D':
+		printf("%c", cursor->val);
+		cursor = tree;
+		break;
+	    default:
+                break;
+	};
+        path++;
     }
+    printf("\n");
 }
 
 int main(int argc, char** argv) {
