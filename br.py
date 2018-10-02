@@ -1,0 +1,18 @@
+def bs(low, up):
+    return (low + up) // 2
+
+
+cipher = 2205316413931134031046440767620541984801091216351222789180535786851451917462804449135087209259828503848304180574549372616172217553002988241140344023060716738565104171296716554122734607654513009667720334889869007276287692856645210293194853
+
+low, up = 0, cipher//3
+current = bs(low, up)
+guess = current ** 3
+while guess != cipher:
+    if guess < cipher:
+        low = current
+    else:
+        up = current
+    current = bs(low, up)
+    guess = current ** 3
+
+print(current)
