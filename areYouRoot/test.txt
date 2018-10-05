@@ -1,0 +1,5 @@
+echo -e "login abcdefgh\x05"
+echo reset
+echo "login aa"
+echo "show"
+echo get-flag
