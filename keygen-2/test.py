@@ -26,7 +26,7 @@ def constraint_02(a):
 def constraint_03(a):
     v1 = ord(a[2])
     v2 = ord(a[0])
-    return mod(v1+v2, 0x24) == 6
+    return mod(v1-v2, 0x24) == 6
 
 
 def constraint_04(a):
@@ -142,21 +142,21 @@ n = Int('n')
 o = Int('o')
 p = Int('p')
 
-s.add(36 > a)
-s.add(36 > b)
-s.add(36 > c)
-s.add(36 > d)
-s.add(36 > e)
-s.add(36 > f)
-s.add(36 > g)
-s.add(36 > h)
-s.add(36 > i)
-s.add(36 > j)
-s.add(36 > k)
-s.add(36 > m)
-s.add(36 > n)
-s.add(36 > o)
-s.add(36 > p)
+# s.add(36 > a)
+# s.add(36 > b)
+# s.add(36 > c)
+# s.add(36 > d)
+# s.add(36 > e)
+# s.add(36 > f)
+# s.add(36 > g)
+# s.add(36 > h)
+# s.add(36 > i)
+# s.add(36 > j)
+# s.add(36 > k)
+# s.add(36 > m)
+# s.add(36 > n)
+# s.add(36 > o)
+# s.add(36 > p)
 
 s.add(a >= 0)
 s.add(b >= 0)
@@ -180,7 +180,7 @@ def cons(sum_, mod_):
 
 cons(a + b, 14)
 cons(c + d, 24)
-cons(a + c, 6)
+cons(c - a, 6)
 cons(b + d + f, 4)
 cons(c + e + g, 13)
 cons(d + e + f, 22)
@@ -192,4 +192,24 @@ cons(i + j + k, 27)
 cons(h + m + n, 23)
 
 if s.check():
-    print(s.model())
+    mo = s.model()
+    print(mo)
+    tpl = '{}'*16
+    print(tpl.format(
+        ORD[mo[a].as_long() % 36],
+        ORD[mo[b].as_long() % 36],
+        ORD[mo[c].as_long() % 36],
+        ORD[mo[d].as_long() % 36],
+        ORD[mo[e].as_long() % 36],
+        ORD[mo[f].as_long() % 36],
+        ORD[mo[g].as_long() % 36],
+        ORD[mo[h].as_long() % 36],
+        ORD[mo[i].as_long() % 36],
+        ORD[mo[j].as_long() % 36],
+        ORD[mo[k].as_long() % 36],
+        'X',
+        ORD[mo[m].as_long() % 36],
+        ORD[mo[n].as_long() % 36],
+        ORD[mo[o].as_long() % 36],
+        ORD[mo[p].as_long() % 36],
+    ))
