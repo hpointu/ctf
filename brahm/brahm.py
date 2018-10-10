@@ -120,8 +120,7 @@ Down with the Soviets,
 006
 {1}""" + 10*"M="
 
-
-guess = "picoCTF{xxxxxx"
+guess = "picoCTF{g0_@g3nt006!_4936528}"
 guess = [ord(c) for c in guess]
 for i in range(len(guess), 45):
     flag = 'picoCTF{%s}' % ((29-9)*'x')
